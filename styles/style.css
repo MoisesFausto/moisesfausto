@@ -44,3 +44,12 @@ a:focus, button:focus, input:focus, textarea:focus {
     background: #555;
 }
 
+.carousel {
+    animation: slide 10s linear infinite;
+}
+
+@keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
