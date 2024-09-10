@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "tail": "npx tailwindcss -i ./source/assets/css/app.css -o ./source/build/css/app.css",
+    "build": "encore dev && npx tailwindcss -i ./source/assets/css/app.css -o ./source/build/css/app.css"
+  },
+  "dependencies": {
+    "@symfony/webpack-encore": "^0.24.0",
+    "highlightjs": "^9.12.0",
+    "postcss-loader": "^3.0.0",
+    "sass": "^1.20.1",
+    "sass-loader": "^7.1.0",
+    "tailwindcss": "^3.4.5"
+  }
+}

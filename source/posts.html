@@ -1,0 +1,54 @@
+---
+layout: default
+title: Posts
+generator: pagination
+pagination:
+    provider: data.posts
+    max_per_page: 6
+use: [posts]
+---
+
+<section id="works" class="py-20 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold mb-8 text-center dark:text-white"><span class="border-b-2 border-orange-600">Blo</span>g</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for post in page.pagination.items %}
+            <div class="bg-white rounded-lg relative overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                <img src="{{ site.url }}/assets/images/blog/cover-post.png" alt="{{ post.title }}" class="w-full h-48 object-cover">
+                <h3 class="text-xl font-semibold mb-2 text-white mx-4 absolute top-10">{{ post.title }}</h3>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4" id="description">{{ post.subtitle }}</p>
+                    <a href="{{ site.url }}{{ post.url }}" target="_blank" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-orange-500 rounded-lg hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300">
+                        Saiba mais
+                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+        {% if page.pagination.previous_page or page.pagination.next_page %}
+        <div class="flex justify-center items-center mt-6">
+            {% if page.pagination.previous_page %}
+            <a href="{{ site.url }}{{ page.pagination.previous_page.url }}" class="flex items-center justify-center px-5 py-2.5 w-[100px] h-[38px] me-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
+                <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                </svg>
+                Anterior
+            </a>
+            {% endif %}
+            {% if page.pagination.next_page %}
+            <a href="{{ site.url }}{{ page.pagination.next_page.url }}" class="flex items-center justify-center px-5 py-2.5 w-[100px] h-[38px] text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
+                Próximo
+                <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
