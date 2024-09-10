@@ -2,6 +2,8 @@
 Este projeto foi criado com [Sculpin Static Site Generator](https://sculpin.io/), 
 para criação do meu [site portifólio, junto do meu blog particular](https://www.moisesfausto.com.br).
 
+![Sculpin Static Site Generator](https://sculpin.io/css/sculpin-mascot-jackson-large.png)
+
 ## Instalando dependências
 
 Depois de clonar o modelo gerado no disco local, você precisará
