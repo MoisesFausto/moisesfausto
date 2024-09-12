@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Moisés Fausto"/>
+
+    <title>Arrumando a casa com sort-imports do ESLint</title>
+
+<meta name="description" content="Se você, assim como eu, preza pela organização, a partir de hoje você vai começar a usar o plugin do ESLint. Se quiser aprender como utilizá-lo, siga o post abaixo.">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2023/09/05/arrumando-a-casa-com-sort-imports-do-eslint" />
+<meta property="og:image" content="/assets/images/blog/cover-post.png" />
+
+<meta name="robots" content="index, follow">
+
+<link rel="apple-touch-startup-image" href="/assets/images/blog/cover-post.png">
+
+    <meta property="og:image:width" content="1080">
+    <meta property="og:image:height" content="850">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="shortcut icon" sizes="1050x1050" href="/assets/icons/logo.png">
+    <link rel="apple-touch-icon" sizes="1050x1050" href="/assets/icons/logo.png">
+
+    <link rel="stylesheet" href="/build/css/app.css"/>
+
+        
+        <script src="https://kit.fontawesome.com/0d061613ad.js" crossorigin="anonymous"></script>
+    </head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+<header class="bg-white shadow-md">
+    <nav class="bg-white dark:bg-gray-900 border-gray-200">
+        <div class="container flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="/" aria-label="Home" class="text-xl font-bold text-gray-800">
+                <img src="/assets/images/logo.png" alt="Moisés Fausto" class="w-16 h-16 rounded-full object-cover mx-auto border-4 border-white dark:bg-gray-900 shadow-lg">
+            </a>
+            <button id="menu-collapse" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false" title="menu" aria-label="menu">
+                <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-900">
+                    <li>
+                        <a href="/#home" aria-label="Home" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300" aria-current="page">Home</a>
+                    </li>
+                    <li>
+                        <a href="/#about" aria-label="Sobre" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Sobre</a>
+                    </li>
+                    <li>
+                        <a href="/#services" aria-label="Serviços" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Serviços</a>
+                    </li>
+                    <li>
+                        <a href="/#works" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Trabalhos</a>
+                    </li>
+                    <li>
+                        <a href="/#contact" aria-label="Contato" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Contato</a>
+                    </li>
+                    <li>
+                        <a href="/posts/" aria-label="Posts" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+            <header class="pt-4 md:pt-7 pb-4 md:pb-7 mb-4">
+                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">Arrumando a casa com sort-imports do ESLint</h1>
+                                <p class="lead dark:text-white">Se você, assim como eu, preza pela organização, a partir de hoje você vai começar a usar o plugin do ESLint. Se quiser aprender como utilizá-lo, siga o post abaixo.</p>
+                            </header>
+            <section class="content dark:text-white">
+                <p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*IBILU5G3Gj7Tn8a_7FJSXA.png" alt="Arrumando a casa com sort-imports do ESLint" /></p>
+
+<p>Você já imaginou como, ao longo do tempo, sua aplicação cresce em tamanho e suas importações se tornam cada vez mais caóticas, a ponto de se tornarem completamente incompreensíveis? À medida que a complexidade da sua aplicação aumenta, a falta de organização das importações deixa de fazer sentido, como se você tivesse uma casa bagunçada que nunca é arrumada.</p>
+
+<p>Se você, assim como eu, preza pela organização, a partir de hoje você vai começar a usar o plugin do ESLint. Se quiser aprender como utilizá-lo, siga o post abaixo. 😉</p>
+
+<p>Primeiro de tudo, confira o exemplo de um arquivo com as importações sem organização.</p>
+
+<pre><code>import dois from 'numeros.js'
+import A from 'alfabeto.js'
+
+import { SaoPaulo, EspiritoSanto, RioDeJaneiro, MinasGerais  } from 'cidades.js'
+import * as estados from 'estados.js'
+import { brasil, nigeria, alemanha } from 'paises.js'
+
+import { LadyGaga } from 'artistas.js'
+</code></pre>
+
+<p>Para organizarmos as importações, precisamos usar o plugin do ESLint chamado <a href="https://eslint.org/docs/latest/rules/sort-imports">sort-imports</a>. É com ele que iremos analisar todas as importações do nosso projeto e, com um simples comando, verificar o que podemos corrigir.</p>
+
+<p>Para isso, instale o ESLint, como comando:</p>
+
+<pre><code>yarn add --dev eslint
+</code></pre>
+
+<p>Após a instalação iremos configurar o ESLint, para isso rode o comando:</p>
+
+<pre><code>npx eslint --init
+</code></pre>
+
+<p>Apos rodar o comando, irá aparecer em seu terminal as seguintes perguntas:</p>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*aBktbVm5c18fLP74oVGMcg.png" alt="resultado do comando acima" /></p>
+
+<p>Isso vai variar de acordo com o seu projeto. Se você já quiser adicioná-lo a um projeto existente, pule para o próximo tópico.</p>
+
+<p>Agora, voltando à configuração, após responder às perguntas da instalação, deixe seu arquivo <strong>package.json</strong> de acordo com o de baixo:</p>
+
+<pre><code>{
+    "scripts": {
+        "lint": "eslint .",
+        "lint:fix": "yarn run lint --fix"
+    },
+    "devDependencies": {
+        "eslint": "^8.48.0"
+    },
+    "license": "MIT"
+}
+</code></pre>
+
+<h2 id="%C3%89-hora-de-de-solucionar-o-problema-finalmente">É hora de de solucionar o problema (finalmente)</h2>
+
+<p>Agora chegou a hora de resolver o nosso problema principal, que é organizar nossas importações. Para isso, precisamos adicionar o plugin sort-imports no arquivo .eslintrc, como mostrado na imagem abaixo:</p>
+
+<pre><code>{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "overrides": [
+    ],
+    "parsetOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    // Adicione dentro de rules o plugin
+    "rules": {
+        "sort-imports": "error"
+    }
+}
+</code></pre>
+
+<p>Basicamente, essa regra verifica todas as declarações de importação e garante que todas as importações sejam organizadas primeiro de acordo com a sintaxe dos elementos utilizados e, em seguida, de forma alfabética pelo primeiro elemento ou nome de alias..</p>
+
+<p>Só com isso já conseguimos ter uma correção de lint ocorrendo. Para corrigir, basta rodar o comando:</p>
+
+<pre><code>yarn run lint:fix
+</code></pre>
+
+<p>Mas não para por aí, ainda podemos fazer algo ainda mais personalizado. Vamos adicionar as seguintes linhas:</p>
+
+<pre><code>// Adiocione dentro de rules o plugin
+"rules": {
+    "sort-imports": ["error", {
+        "ignoreCase": false,
+        "ignoreDeclareSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["all", "single", "multiple", "none"],
+        "allowSeparateGroup": true
+    }]
+}
+</code></pre>
+
+<p>Como diria Jack, o Estripador: “Vamos por partes!”</p>
+
+<h2 id="o-que-cada-linha-faz">O que cada linha faz</h2>
+
+<p>Linha 4: Quando true, a regra ignora a distinção entre maiúsculas e minúsculas no nome local das importações.</p>
+
+<p>Linhas 5: Ignora a classificação das instruções de declaração de importação.</p>
+
+<p>Linha 6: Ignora a classificação dos elementos em uma declaração de importação com vários membros.</p>
+
+<p>Linha 7: Existem quatro estilos diferentes, e a ordem de classificação da sintaxe de um elemento padrão é:</p>
+
+<ul>
+<li>none - módulo de importação sem ligações exportadas.</li>
+<li>all - importe todos os membros fornecidos pelas ligações exportadas.</li>
+<li>multiple - importar vários membros.</li>
+<li>single - importar um membro.</li>
+</ul>
+
+<p>Todas as quatro opções devem ser especificadas no array, mas você pode personalizar a sua ordem.</p>
+
+<p>Linha 8: Quando <em>true</em>, a regra verifica a classificação das declarações de importação apenas para aquelas que aparecem em linhas consecutivas.</p>
+
+<p>Em termos simples, se houver uma linha em branco, uma linha com um comentário ou qualquer outra instrução após uma declaração de importação, isso afetará a ordenação das declarações de importação.</p>
+
+<p>Agora vamos rodar o comando de lint para que ele nos mostre os erros, como mostrado abaixo:</p>
+
+<pre><code>yarn lint
+</code></pre>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*codmJEj7r-xmKiKoCP4oVQ.png" alt="erros informados a partir do comando acima" /></p>
+
+<p>Podemos corrigir manualmente ou podemos deixar o comando corrigir para nós, usando o seguinte comando:</p>
+
+<pre><code>yarn lint:fix
+</code></pre>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*vNW94YnoIo2-HUgSNWMqHQ.png" alt="Alguns dos erros corrigidos a partir do comando acima" /></p>
+
+<p>Vimos que ele corrigiu a maioria dos problemas. Agora, conseguimos corrigir manualmente o restante e obter o seguinte resultado:</p>
+
+<pre><code>import A from 'alfabeto.js'
+import dois from 'numeros.js'
+
+import * as estados from 'estados.js'
+import { EspiritoSanto, MinasGerais, RioDeJaneiro, SaoPaulo } from 'cidades.js'
+import { alemanha, brasil, nigeria } from 'paises.js'
+
+import { LadyGaga } from 'artistas.js'
+</code></pre>
+
+<p>Aposto que com essa dica, seu projeto vai ter uma aparência diferente. Espero ter ajudado você com este passo a passo. Se gostou ou acredita que posso melhorar algo, deixe algum comentário abaixo!</p>
+
+<p>Obrigado e até a próxima…</p>
+
+<p>fonte: <a href="https://eslint.org/docs/latest/rules/sort-imports">https://eslint.org/docs/latest/rules/sort-imports</a></p>
+
+                <div class="w-full max-h-52">
+                    <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                        <img class="rounded-lg" src="/assets/images/marketing/672x208-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    </a>
+                </div>
+            </section>
+            <section class="taxonomies mt-5">
+                <div class="taxonomy">
+                    <strong class="dark:text-white">tags:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">nodejs</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">eslint</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">javascript</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">vuejs</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">reactjs</span>
+                                    </div>
+                <div class="taxonomy">
+                    <strong class="dark:text-white">categoria:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">Tutorial</span>
+                                    </div>
+            </section>
+            <footer class="mt-5">
+                <div>
+                    <p class="text-xl font-bold text-gray-900 dark:text-white">Moisés Fausto</p>
+                    <p class="text-base text-gray-500 dark:text-white-400">Software Developer</p>
+                    <p class="text-base text-gray-500 dark:text-white-400"><time pubdate datetime="1693872000" title="{ page.date|format_date(pattern='Y-MM-dd') }}">Publicado em 05 de setembro de 2023</time></p>
+                </div>
+            </footer>
+        </article>
+        <aside class="h-screen transition-transform -translate-x-full sm:translate-x-0 hidden md:block">
+
+                                            <figure class="relative max-w-sm mb-5 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                    <a href="/blog/2023/05/17/os-melhores-cursos-gratuitos-e-pagos-para-se-tornar-um-desenvolvedor-de-sucesso" aria-label="post anterior">
+                        <img class="rounded-lg w-80" src="/assets/images/blog/cover-post.png" alt="Os melhores cursos Gratuitos e Pagos para se tornar um Desenvolvedor de sucesso!">
+                    </a>
+                    <figcaption class="absolute bg-black/70 rounded-lg p-4 text-lg text-white bottom-0">
+                        <p class="text-lg font-bold">Os melhores cursos Gratuitos e Pagos para se tornar um Desenvolvedor de sucesso!</p>
+                    </figcaption>
+                </figure>
+                                            
+            <figure class="max-w-sm transition-all duration-300 cursor-pointer">
+                <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    <img class="rounded-lg w-80" src="/assets/images/marketing/320x272-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                </a>
+            </figure>
+        </aside>
+    </div>
+</div>
+</main>
+
+<footer class="bg-orange-600 text-white py-4">
+    <div class="container mx-auto px-6 text-center">
+        <p>&copy; <span id="current-year"></span> Moisés Fausto. All rights reserved. <a class="hidden" aria-label="RSS" href="/atom.xml">RSS</a></p>
+    </div>
+</footer>
+
+<script type="text/javascript" src="/build/js/app.js"></script>
+
+
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XWECERXMS6"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-XWECERXMS6');
+	</script>
+
+
+</body>
+</html>

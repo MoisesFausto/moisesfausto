@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Moisés Fausto"/>
+
+    <title>ID Sequencial vs. UUID em SQL: qual é o melhor identificador para sua tabela?</title>
+
+<meta name="description" content="Você sabe diferenciar UUID para ID e sabe onde deve ser implementado? Leia o post de hoje e saiba mais.">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2023/03/31/id-sequencial-vs-uuid-em-sql-qual-e-o-melhor-identificador-para-sua-tabela" />
+<meta property="og:image" content="/assets/images/blog/cover-post.png" />
+
+<meta name="robots" content="index, follow">
+
+<link rel="apple-touch-startup-image" href="/assets/images/blog/cover-post.png">
+
+    <meta property="og:image:width" content="1080">
+    <meta property="og:image:height" content="850">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="shortcut icon" sizes="1050x1050" href="/assets/icons/logo.png">
+    <link rel="apple-touch-icon" sizes="1050x1050" href="/assets/icons/logo.png">
+
+    <link rel="stylesheet" href="/build/css/app.css"/>
+
+        
+        <script src="https://kit.fontawesome.com/0d061613ad.js" crossorigin="anonymous"></script>
+    </head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+<header class="bg-white shadow-md">
+    <nav class="bg-white dark:bg-gray-900 border-gray-200">
+        <div class="container flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="/" aria-label="Home" class="text-xl font-bold text-gray-800">
+                <img src="/assets/images/logo.png" alt="Moisés Fausto" class="w-16 h-16 rounded-full object-cover mx-auto border-4 border-white dark:bg-gray-900 shadow-lg">
+            </a>
+            <button id="menu-collapse" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false" title="menu" aria-label="menu">
+                <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-900">
+                    <li>
+                        <a href="/#home" aria-label="Home" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300" aria-current="page">Home</a>
+                    </li>
+                    <li>
+                        <a href="/#about" aria-label="Sobre" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Sobre</a>
+                    </li>
+                    <li>
+                        <a href="/#services" aria-label="Serviços" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Serviços</a>
+                    </li>
+                    <li>
+                        <a href="/#works" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Trabalhos</a>
+                    </li>
+                    <li>
+                        <a href="/#contact" aria-label="Contato" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Contato</a>
+                    </li>
+                    <li>
+                        <a href="/posts/" aria-label="Posts" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+            <header class="pt-4 md:pt-7 pb-4 md:pb-7 mb-4">
+                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">ID Sequencial vs. UUID em SQL: qual é o melhor identificador para sua tabela?</h1>
+                                <p class="lead dark:text-white">Você sabe diferenciar UUID para ID e sabe onde deve ser implementado? Leia o post de hoje e saiba mais.</p>
+                            </header>
+            <section class="content dark:text-white">
+                <p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*IU_rWat3qmb2snZldTH6cQ.png" alt="ID Sequencial vs. UUID em SQL: qual é o melhor identificador para sua tabela?" /></p>
+
+<p>E ai, galera!</p>
+
+<p>Recentemente eu estava estudando sobre Banco de Dados <a href="https://www.postgresql.org/">PostegreSQL</a>, e reparei que o instrutor estava se referenciando ao identificador da tabela de uma forma não comum para mim. Ele usava ao <a href="https://www.postgresql.org/docs/current/datatype-uuid.html">UUID</a> ao invés de um ID, e por isso eu resolvi entender melhor e compartilhar esse breve conteúdo, espero que gostem.</p>
+
+<p>Quando criamos tabelas em SQL, precisamos de um identificador exclusivo para cada linha da tabela. O ID sequencial é um número inteiro que é atribuído automaticamente pelo sistema de gerenciamento de banco de dados (DBMS) a cada nova linha adicionada à tabela. Esse número é geralmente incrementado em um valor fixo a cada nova linha adicionada.</p>
+
+<p>Por exemplo:</p>
+
+<pre><code>CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255),
+    email VARCHAR(255)
+);
+</code></pre>
+
+<p>Nesse exemplo, o ID é um inteiro que é gerado automaticamente pelo DBMS a cada nova linha adicionada à tabela clientes. O uso de IDs sequenciais é simples e fácil de implementar, e pode ser muito eficiente em termos de desempenho para grandes tabelas, pois não há necessidade de gerar um valor exclusivo complexo para cada nova linha.</p>
+
+<p>Por outro lado, o UUID é um identificador exclusivo global que é gerado aleatoriamente e é garantido que nunca se repetirá. Isso significa que o valor do UUID é muito menos previsível do que um ID sequencial, e é muito improvável que duas linhas na mesma ou em tabelas diferentes tenham o mesmo valor de UUID. Por exemplo:</p>
+
+<pre><code>CREATE TABLE produtos (
+    id UUID PRIMARY KEY,
+    nome VARCHAR(255),
+    preco DECIMAL(10,2)
+);
+</code></pre>
+
+<p>Nesse exemplo, o ID é um UUID que é gerado aleatoriamente pelo DBMS a cada nova linha adicionada à tabela produtos. O uso de UUIDs garante que o valor exclusivo de cada linha na tabela seja mantido, mesmo se os dados forem distribuídos em vários servidores.</p>
+
+<h2 id="id-sequencial">ID Sequencial</h2>
+
+<h3 id="pontos-positivos%3A">Pontos Positivos:</h3>
+
+<ul>
+<li>Fácil de implementar</li>
+<li>Geralmente muito eficiente em termos de desempenho para grandes tabelas</li>
+<li>Possibilita uma ordenação das linhas de acordo com a ordem de inserção</li>
+</ul>
+
+<h3 id="pontos-negativos%3A">Pontos negativos:</h3>
+
+<ul>
+<li>Não garante a exclusividade dos valores gerados, uma vez que valores duplicados podem ser gerados se houver alguma falha no sistema</li>
+<li>Torna mais fácil a tentativa de adivinhar valores de ID subsequentes e, portanto, menos seguro</li>
+</ul>
+
+<h2 id="uuid">UUID</h2>
+
+<h3 id="pontos-positivos%3A">Pontos positivos:</h3>
+
+<ul>
+<li>Garante a exclusividade dos valores gerados, mesmo se os dados forem distribuídos em vários servidores</li>
+<li>É muito menos previsível do que um ID sequencial, tornando mais difícil a tentativa de adivinhar valores subsequentes e, portanto, mais seguro</li>
+</ul>
+
+<h3 id="pontos-negativos%3A">Pontos Negativos:</h3>
+
+<ul>
+<li>Pode ser mais difícil de implementar em comparação com um ID sequencial</li>
+<li>Pode ter um desempenho um pouco pior em grandes tabelas, devido à complexidade dos valores gerados</li>
+<li>Não permite uma ordenação das linhas de acordo com a ordem de inserção, o que pode ser um problema em certas aplicações</li>
+</ul>
+
+<p>Em resumo, a principal diferença entre o uso de um ID sequencial e um UUID para identificar tabelas em SQL é a previsibilidade do valor gerado. IDs sequenciais são previsíveis e fáceis de implementar, mas não são garantidos como exclusivos, enquanto os UUIDs são muito menos previsíveis e garantidos como exclusivos. A escolha entre usar um ID sequencial ou um UUID dependerá das necessidades específicas do sistema e das características de desempenho e segurança desejadas.</p>
+
+                <div class="w-full max-h-52">
+                    <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                        <img class="rounded-lg" src="/assets/images/marketing/672x208-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    </a>
+                </div>
+            </section>
+            <section class="taxonomies mt-5">
+                <div class="taxonomy">
+                    <strong class="dark:text-white">tags:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">SQL</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">Postgres</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">IDxUUID</span>
+                                    </div>
+                <div class="taxonomy">
+                    <strong class="dark:text-white">categoria:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">arquiteture</span>
+                                    </div>
+            </section>
+            <footer class="mt-5">
+                <div>
+                    <p class="text-xl font-bold text-gray-900 dark:text-white">Moisés Fausto</p>
+                    <p class="text-base text-gray-500 dark:text-white-400">Software Developer</p>
+                    <p class="text-base text-gray-500 dark:text-white-400"><time pubdate datetime="1680220800" title="{ page.date|format_date(pattern='Y-MM-dd') }}">Publicado em 31 de março de 2023</time></p>
+                </div>
+            </footer>
+        </article>
+        <aside class="h-screen transition-transform -translate-x-full sm:translate-x-0 hidden md:block">
+
+                                            <figure class="relative max-w-sm mb-5 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                    <a href="/blog/2023/02/28/algumas-dicas-para-aprender-ingles-na-area-de-tecnologia" aria-label="post anterior">
+                        <img class="rounded-lg w-80" src="/assets/images/blog/cover-post.png" alt="Algumas dicas para aprender inglês na área de tecnologia">
+                    </a>
+                    <figcaption class="absolute bg-black/70 rounded-lg p-4 text-lg text-white bottom-0">
+                        <p class="text-lg font-bold">Algumas dicas para aprender inglês na área de tecnologia</p>
+                    </figcaption>
+                </figure>
+                                                <figure class="relative max-w-sm mb-5 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                    <a href="/blog/2023/05/17/os-melhores-cursos-gratuitos-e-pagos-para-se-tornar-um-desenvolvedor-de-sucesso" aria-label="próximo post">
+                        <img class="rounded-lg w-80" src="/assets/images/blog/cover-post.png" alt="Os melhores cursos Gratuitos e Pagos para se tornar um Desenvolvedor de sucesso!">
+                    </a>
+                    <figcaption class="absolute bg-black/70 rounded-lg p-4 text-lg text-white bottom-0">
+                        <p class="text-lg font-bold">Os melhores cursos Gratuitos e Pagos para se tornar um Desenvolvedor de sucesso!</p>
+                    </figcaption>
+                </figure>
+                            
+            <figure class="max-w-sm transition-all duration-300 cursor-pointer">
+                <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    <img class="rounded-lg w-80" src="/assets/images/marketing/320x272-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                </a>
+            </figure>
+        </aside>
+    </div>
+</div>
+</main>
+
+<footer class="bg-orange-600 text-white py-4">
+    <div class="container mx-auto px-6 text-center">
+        <p>&copy; <span id="current-year"></span> Moisés Fausto. All rights reserved. <a class="hidden" aria-label="RSS" href="/atom.xml">RSS</a></p>
+    </div>
+</footer>
+
+<script type="text/javascript" src="/build/js/app.js"></script>
+
+
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XWECERXMS6"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-XWECERXMS6');
+	</script>
+
+
+</body>
+</html>

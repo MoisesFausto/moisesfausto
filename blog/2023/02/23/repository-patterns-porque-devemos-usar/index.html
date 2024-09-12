@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Moisés Fausto"/>
+
+    <title>Repository Patterns: Porque devemos usar?</title>
+
+<meta name="description" content="O Repository Pattern é um padrão de design de software que fornece uma abstração de alto nível para o acesso a dados. Ele é amplamente utilizado em projetos de software para separar a lógica de negócios da lógica de acesso a dados, tornando o código mais organizado, reutilizável e fácil de manter.">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2023/02/23/repository-patterns-porque-devemos-usar" />
+<meta property="og:image" content="/assets/images/blog/cover-post.png" />
+
+<meta name="robots" content="index, follow">
+
+<link rel="apple-touch-startup-image" href="/assets/images/blog/cover-post.png">
+
+    <meta property="og:image:width" content="1080">
+    <meta property="og:image:height" content="850">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="shortcut icon" sizes="1050x1050" href="/assets/icons/logo.png">
+    <link rel="apple-touch-icon" sizes="1050x1050" href="/assets/icons/logo.png">
+
+    <link rel="stylesheet" href="/build/css/app.css"/>
+
+        
+        <script src="https://kit.fontawesome.com/0d061613ad.js" crossorigin="anonymous"></script>
+    </head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+<header class="bg-white shadow-md">
+    <nav class="bg-white dark:bg-gray-900 border-gray-200">
+        <div class="container flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="/" aria-label="Home" class="text-xl font-bold text-gray-800">
+                <img src="/assets/images/logo.png" alt="Moisés Fausto" class="w-16 h-16 rounded-full object-cover mx-auto border-4 border-white dark:bg-gray-900 shadow-lg">
+            </a>
+            <button id="menu-collapse" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false" title="menu" aria-label="menu">
+                <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-900">
+                    <li>
+                        <a href="/#home" aria-label="Home" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300" aria-current="page">Home</a>
+                    </li>
+                    <li>
+                        <a href="/#about" aria-label="Sobre" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Sobre</a>
+                    </li>
+                    <li>
+                        <a href="/#services" aria-label="Serviços" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Serviços</a>
+                    </li>
+                    <li>
+                        <a href="/#works" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Trabalhos</a>
+                    </li>
+                    <li>
+                        <a href="/#contact" aria-label="Contato" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Contato</a>
+                    </li>
+                    <li>
+                        <a href="/posts/" aria-label="Posts" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+            <header class="pt-4 md:pt-7 pb-4 md:pb-7 mb-4">
+                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">Repository Patterns: Porque devemos usar?</h1>
+                                <p class="lead dark:text-white">O Repository Pattern é um padrão de design de software que fornece uma abstração de alto nível para o acesso a dados. Ele é amplamente utilizado em projetos de software para separar a lógica de negócios da lógica de acesso a dados, tornando o código mais organizado, reutilizável e fácil de manter.</p>
+                            </header>
+            <section class="content dark:text-white">
+                <p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*OAFJOw3aphju1Fm7ksDrtA.png" alt="Repository Patterns: Porque devemos usar?" /></p>
+
+<h2 id="aqui-est%C3%A3o-algumas-informa%C3%A7%C3%B5es-importantes-sobre-o-repository-pattern">Aqui estão algumas informações importantes sobre o Repository Pattern</h2>
+
+<h3 id="import%C3%A2ncia">Importância</h3>
+
+<p>Separação de Responsabilidades: O Repository Pattern permite separar a lógica de acesso a dados da lógica de negócios, tornando o código mais organizado e fácil de manter.</p>
+
+<p>Abstração: O Repository fornece uma abstração de alto nível para o acesso a dados, tornando-o mais fácil de usar e reduzindo a complexidade do código.</p>
+
+<p>Testabilidade: Ao usar o Repository, é possível escrever testes de unidade para a lógica de negócios sem se preocupar com o acesso a dados. Isso torna o teste mais fácil e confiável.</p>
+
+<h3 id="pontos-fortes">Pontos Fortes</h3>
+
+<p>Organização: O Repository torna o código mais organizado, separando as responsabilidades entre a lógica de negócios e o acesso a dados.</p>
+
+<p>Reutilização: O Repository permite reutilizar o mesmo código de acesso a dados em diferentes partes do projeto, reduzindo a duplicação de código.</p>
+
+<p>Testabilidade: O Repository torna o teste de unidade mais fácil e confiável, permitindo que os testes sejam escritos para a lógica de negócios sem se preocupar com o acesso a dados.</p>
+
+<h3 id="pontos-fracos">Pontos Fracos</h3>
+
+<p>Complexidade: O Repository Pattern pode adicionar alguma complexidade ao código, especialmente se o projeto é pequeno e não requer separação de responsabilidades.</p>
+
+<p>Overhead: A implementação do Repository Pattern pode adicionar algum overhead ao código, pois requer a criação de uma camada adicional de abstração.</p>
+
+<h3 id="por-que-usar-em-um-projeto-repository-pattern">Por que usar em um projeto Repository Pattern</h3>
+
+<p>Separação de responsabilidades: O Repository Pattern separa a lógica de negócios da lógica de acesso a dados, tornando o código mais organizado e fácil de manter.</p>
+
+<p>Reutilização de código: O Repository Pattern permite reutilizar o mesmo código de acesso a dados em diferentes partes do projeto, reduzindo a duplicação de código.</p>
+
+<p>Testabilidade: O Repository Pattern torna o teste de unidade mais fácil e confiável, permitindo que os testes sejam escritos para a lógica de negócios sem se preocupar com o acesso a dados.</p>
+
+<p>Facilidade de manutenção: O Repository Pattern torna o código mais fácil de manter, pois separa a lógica de negócios da lógica de acesso a dados, tornando mais fácil fazer alterações no código sem afetar outras partes do projeto.</p>
+
+<h3 id="vamos-ver-um-exemplo-feito-em-node-na-pr%C3%A1tica%21">Vamos ver um exemplo feito em Node na prática!</h3>
+
+<pre><code>listUsers(rquest, response) {
+    const { order } = request.query
+
+    const sortedUsers = user.sort((a, b) =&gt; {
+        if (order === 'desc') return a.id &lt; b.id ? 1 : -1
+
+        return a.id &gt; b.id ? 1 : -1
+    })
+
+    response.send(200, JSON.stringfy(sortedUsers))
+}
+</code></pre>
+
+<p>Temos na imagem acima, um exemplo sem o uso de Repository Patterns, onde vemos que toda a lógica de manipulação dos dados fica sob responsabilidade do método do Controller.</p>
+
+<p>Apesar de ser um código simples, se for uma aplicação escalável, devemos usar o padrão recomendando para tercerizar a responsabilidade dessa manipulação. Vamos ver como ficaria o resultado:</p>
+
+<p>veja como o método que lista os usuários ficou mais clean e agora lida somente com a sua responsabilidade.</p>
+
+<pre><code>listUsers(rquest, response) {
+    const { order } = request.query
+
+    const sortedUsers = UserRepository.orderBy(order, users)
+
+    response.send(200, JSON.stringfy(sortedUsers))
+}
+</code></pre>
+
+<p>Criamos um novo diretório, repository/UserRepository, onde vamos lidar com o método de manipulação de ordenação.</p>
+
+<pre><code>class UserRepository {
+    orderBy(order, users) {
+        const sorted = users.sort((a, b) =&gt; {
+            if (order === 'desc') return a.id &lt; b.id ? 1 : -1
+
+            return a.id &gt; b.id ? 1 : -1
+        })
+
+        return sorted
+    }
+}
+
+module.exports = new UserRepository();
+</code></pre>
+
+<p>Apesar de parecer mais trabalhoso, na prática iremos entender melhor a importância desse Domain-Driven Design, onde iremos ter muito mais produtividade e manutenção mais fácil no código.</p>
+
+                <div class="w-full max-h-52">
+                    <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                        <img class="rounded-lg" src="/assets/images/marketing/672x208-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    </a>
+                </div>
+            </section>
+            <section class="taxonomies mt-5">
+                <div class="taxonomy">
+                    <strong class="dark:text-white">tags:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">repository-patterns</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">DDD</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">nodejs</span>
+                                    </div>
+                <div class="taxonomy">
+                    <strong class="dark:text-white">categoria:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">arquiteture</span>
+                                    </div>
+            </section>
+            <footer class="mt-5">
+                <div>
+                    <p class="text-xl font-bold text-gray-900 dark:text-white">Moisés Fausto</p>
+                    <p class="text-base text-gray-500 dark:text-white-400">Software Developer</p>
+                    <p class="text-base text-gray-500 dark:text-white-400"><time pubdate datetime="1677110400" title="{ page.date|format_date(pattern='Y-MM-dd') }}">Publicado em 23 de fevereiro de 2023</time></p>
+                </div>
+            </footer>
+        </article>
+        <aside class="h-screen transition-transform -translate-x-full sm:translate-x-0 hidden md:block">
+
+                                            <figure class="relative max-w-sm mb-5 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                    <a href="/blog/2021/07/04/deploy-na-digital-ocean-minhaexperiencia" aria-label="post anterior">
+                        <img class="rounded-lg w-80" src="/assets/images/blog/cover-post.png" alt="Deploy na Digital Ocean MinhaExperiência">
+                    </a>
+                    <figcaption class="absolute bg-black/70 rounded-lg p-4 text-lg text-white bottom-0">
+                        <p class="text-lg font-bold">Deploy na Digital Ocean MinhaExperiência</p>
+                    </figcaption>
+                </figure>
+                                                <figure class="relative max-w-sm mb-5 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                    <a href="/blog/2023/02/23/thunder-client-sera-o-melhor-client-rest" aria-label="próximo post">
+                        <img class="rounded-lg w-80" src="/assets/images/blog/cover-post.png" alt="Thunder Client: será o melhor Client REST?">
+                    </a>
+                    <figcaption class="absolute bg-black/70 rounded-lg p-4 text-lg text-white bottom-0">
+                        <p class="text-lg font-bold">Thunder Client: será o melhor Client REST?</p>
+                    </figcaption>
+                </figure>
+                            
+            <figure class="max-w-sm transition-all duration-300 cursor-pointer">
+                <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    <img class="rounded-lg w-80" src="/assets/images/marketing/320x272-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                </a>
+            </figure>
+        </aside>
+    </div>
+</div>
+</main>
+
+<footer class="bg-orange-600 text-white py-4">
+    <div class="container mx-auto px-6 text-center">
+        <p>&copy; <span id="current-year"></span> Moisés Fausto. All rights reserved. <a class="hidden" aria-label="RSS" href="/atom.xml">RSS</a></p>
+    </div>
+</footer>
+
+<script type="text/javascript" src="/build/js/app.js"></script>
+
+
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XWECERXMS6"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-XWECERXMS6');
+	</script>
+
+
+</body>
+</html>

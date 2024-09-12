@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Moisés Fausto"/>
+
+    <title>Thunder Client: será o melhor Client REST?</title>
+
+<meta name="description" content="Para os fãs de VSCode, o Thunder Client é uma extensão incrível para fazer requisições HTTP diretamente no editor, semelhante ao POSTMAN e Insomnia.">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2023/02/23/thunder-client-sera-o-melhor-client-rest" />
+<meta property="og:image" content="/assets/images/blog/cover-post.png" />
+
+<meta name="robots" content="index, follow">
+
+<link rel="apple-touch-startup-image" href="/assets/images/blog/cover-post.png">
+
+    <meta property="og:image:width" content="1080">
+    <meta property="og:image:height" content="850">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="shortcut icon" sizes="1050x1050" href="/assets/icons/logo.png">
+    <link rel="apple-touch-icon" sizes="1050x1050" href="/assets/icons/logo.png">
+
+    <link rel="stylesheet" href="/build/css/app.css"/>
+
+        
+        <script src="https://kit.fontawesome.com/0d061613ad.js" crossorigin="anonymous"></script>
+    </head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+<header class="bg-white shadow-md">
+    <nav class="bg-white dark:bg-gray-900 border-gray-200">
+        <div class="container flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="/" aria-label="Home" class="text-xl font-bold text-gray-800">
+                <img src="/assets/images/logo.png" alt="Moisés Fausto" class="w-16 h-16 rounded-full object-cover mx-auto border-4 border-white dark:bg-gray-900 shadow-lg">
+            </a>
+            <button id="menu-collapse" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false" title="menu" aria-label="menu">
+                <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-900">
+                    <li>
+                        <a href="/#home" aria-label="Home" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300" aria-current="page">Home</a>
+                    </li>
+                    <li>
+                        <a href="/#about" aria-label="Sobre" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Sobre</a>
+                    </li>
+                    <li>
+                        <a href="/#services" aria-label="Serviços" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Serviços</a>
+                    </li>
+                    <li>
+                        <a href="/#works" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Trabalhos</a>
+                    </li>
+                    <li>
+                        <a href="/#contact" aria-label="Contato" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Contato</a>
+                    </li>
+                    <li>
+                        <a href="/posts/" aria-label="Posts" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+            <header class="pt-4 md:pt-7 pb-4 md:pb-7 mb-4">
+                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">Thunder Client: será o melhor Client REST?</h1>
+                                <p class="lead dark:text-white">Para os fãs de VSCode, o Thunder Client é uma extensão incrível para fazer requisições HTTP diretamente no editor, semelhante ao POSTMAN e Insomnia.</p>
+                            </header>
+            <section class="content dark:text-white">
+                <p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*QudcIgp5KGyBccUOGWi1Gw.gif" alt="Thunder Client: será o melhor Client REST?" /></p>
+
+<p>E ai galera….</p>
+
+<p>A poucas semanas eu vi um parceiro de profissão compartilhar algo, que achei incrível e que parece que ajudou bastante gente.</p>
+
+<p>De lá pra cá, venho pensando em fazer o mesmo e assim ajudar pelo menos uma pessoa por aqui!</p>
+
+<p>O que eu venho falar hoje, é sobre uma extensão para os amantes da ferramenta <strong>VSCODE</strong>, que particularmente eu acho perfeita.</p>
+
+<p>Com <strong>mais de 1200 downloads</strong> o Thunder Clint, basicamente ajuda a fazer requisição HTTP, muito similar as ferramentas <strong>POSTMAN</strong> e o <strong>Insomnia</strong>, sendo um pouco menos robusta por ser uma extensão. Mas não pense que ela fica muito abaixo das concorrentes, pois essa pequena extensão não deve nada em quesito de funcionalidade, e cada nova versão vem ganhando mais funcionalidades.</p>
+
+<p>Um ponto que destaco, é que ela é altamente produtiva, pois você não precisa sair do VSCODE para fazer as requisições, se você como eu, gosta de manter tudo centralizado, você vai entender perfeitamente o quão produtivo é utilizar o <a href="https://www.linkedin.com/company/thunderclient/">Thunder Client</a>. Além disso, ela conta também com:</p>
+
+<ul>
+<li>interface muito amigável;</li>
+<li>suporte para coleções e variáveis de ambiente;</li>
+<li>script de teste;</li>
+<li>suporte ao tema instalado;</li>
+<li>importação e exportação para o POSTMAN;</li>
+</ul>
+
+<p>Maneiro né, nem parece uma extensão. Hoje eu não vivo sem!</p>
+
+                <div class="w-full max-h-52">
+                    <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                        <img class="rounded-lg" src="/assets/images/marketing/672x208-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    </a>
+                </div>
+            </section>
+            <section class="taxonomies mt-5">
+                <div class="taxonomy">
+                    <strong class="dark:text-white">tags:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">vscode</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">API</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">plugins</span>
+                                    </div>
+                <div class="taxonomy">
+                    <strong class="dark:text-white">categoria:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">dicas</span>
+                                    </div>
+            </section>
+            <footer class="mt-5">
+                <div>
+                    <p class="text-xl font-bold text-gray-900 dark:text-white">Moisés Fausto</p>
+                    <p class="text-base text-gray-500 dark:text-white-400">Software Developer</p>
+                    <p class="text-base text-gray-500 dark:text-white-400"><time pubdate datetime="1677110400" title="{ page.date|format_date(pattern='Y-MM-dd') }}">Publicado em 23 de fevereiro de 2023</time></p>
+                </div>
+            </footer>
+        </article>
+        <aside class="h-screen transition-transform -translate-x-full sm:translate-x-0 hidden md:block">
+
+                                            <figure class="relative max-w-sm mb-5 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                    <a href="/blog/2023/02/23/repository-patterns-porque-devemos-usar" aria-label="post anterior">
+                        <img class="rounded-lg w-80" src="/assets/images/blog/cover-post.png" alt="Repository Patterns: Porque devemos usar?">
+                    </a>
+                    <figcaption class="absolute bg-black/70 rounded-lg p-4 text-lg text-white bottom-0">
+                        <p class="text-lg font-bold">Repository Patterns: Porque devemos usar?</p>
+                    </figcaption>
+                </figure>
+                                                <figure class="relative max-w-sm mb-5 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                    <a href="/blog/2023/02/28/algumas-dicas-para-aprender-ingles-na-area-de-tecnologia" aria-label="próximo post">
+                        <img class="rounded-lg w-80" src="/assets/images/blog/cover-post.png" alt="Algumas dicas para aprender inglês na área de tecnologia">
+                    </a>
+                    <figcaption class="absolute bg-black/70 rounded-lg p-4 text-lg text-white bottom-0">
+                        <p class="text-lg font-bold">Algumas dicas para aprender inglês na área de tecnologia</p>
+                    </figcaption>
+                </figure>
+                            
+            <figure class="max-w-sm transition-all duration-300 cursor-pointer">
+                <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    <img class="rounded-lg w-80" src="/assets/images/marketing/320x272-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                </a>
+            </figure>
+        </aside>
+    </div>
+</div>
+</main>
+
+<footer class="bg-orange-600 text-white py-4">
+    <div class="container mx-auto px-6 text-center">
+        <p>&copy; <span id="current-year"></span> Moisés Fausto. All rights reserved. <a class="hidden" aria-label="RSS" href="/atom.xml">RSS</a></p>
+    </div>
+</footer>
+
+<script type="text/javascript" src="/build/js/app.js"></script>
+
+
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XWECERXMS6"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-XWECERXMS6');
+	</script>
+
+
+</body>
+</html>

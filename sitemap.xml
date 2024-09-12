@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc></loc>
+        <lastmod>2024-09-12</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
+        <loc>/blog/2023/09/05/arrumando-a-casa-com-sort-imports-do-eslint</loc>
+        <lastmod>2023-09-05T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>/blog/2023/05/17/os-melhores-cursos-gratuitos-e-pagos-para-se-tornar-um-desenvolvedor-de-sucesso</loc>
+        <lastmod>2023-05-17T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>/blog/2023/03/31/id-sequencial-vs-uuid-em-sql-qual-e-o-melhor-identificador-para-sua-tabela</loc>
+        <lastmod>2023-03-31T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>/blog/2023/02/28/algumas-dicas-para-aprender-ingles-na-area-de-tecnologia</loc>
+        <lastmod>2023-02-28T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>/blog/2023/02/23/thunder-client-sera-o-melhor-client-rest</loc>
+        <lastmod>2023-02-23T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>/blog/2023/02/23/repository-patterns-porque-devemos-usar</loc>
+        <lastmod>2023-02-23T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>/blog/2021/07/04/deploy-na-digital-ocean-minhaexperiencia</loc>
+        <lastmod>2021-07-04T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+</urlset>

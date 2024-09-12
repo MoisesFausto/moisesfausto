@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Moisés Fausto | Full Stack Developer | PHP | Laravel | Vue Js]]></title>
+    <link href="/atom.xml" rel="self"/>
+    <link href="/"/>
+    <updated>2024-09-12T03:31:38+00:00</updated>
+    <id>/</id>
+        <author>
+        <name><![CDATA[Moisés Fausto]]></name>            </author>
+        <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[Arrumando a casa com sort-imports do ESLint]]></title>
+        <link href="/blog/2023/09/05/arrumando-a-casa-com-sort-imports-do-eslint"/>
+        <updated>2023-09-05T00:00:00+00:00</updated>
+        <id>/blog/2023/09/05/arrumando-a-casa-com-sort-imports-do-eslint</id>
+        <content type="html"><![CDATA[<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*IBILU5G3Gj7Tn8a_7FJSXA.png" alt="Arrumando a casa com sort-imports do ESLint" /></p>
+
+<p>Você já imaginou como, ao longo do tempo, sua aplicação cresce em tamanho e suas importações se tornam cada vez mais caóticas, a ponto de se tornarem completamente incompreensíveis? À medida que a complexidade da sua aplicação aumenta, a falta de organização das importações deixa de fazer sentido, como se você tivesse uma casa bagunçada que nunca é arrumada.</p>
+
+<p>Se você, assim como eu, preza pela organização, a partir de hoje você vai começar a usar o plugin do ESLint. Se quiser aprender como utilizá-lo, siga o post abaixo. 😉</p>
+
+<p>Primeiro de tudo, confira o exemplo de um arquivo com as importações sem organização.</p>
+
+<pre><code>import dois from 'numeros.js'
+import A from 'alfabeto.js'
+
+import { SaoPaulo, EspiritoSanto, RioDeJaneiro, MinasGerais  } from 'cidades.js'
+import * as estados from 'estados.js'
+import { brasil, nigeria, alemanha } from 'paises.js'
+
+import { LadyGaga } from 'artistas.js'
+</code></pre>
+
+<p>Para organizarmos as importações, precisamos usar o plugin do ESLint chamado <a href="https://eslint.org/docs/latest/rules/sort-imports">sort-imports</a>. É com ele que iremos analisar todas as importações do nosso projeto e, com um simples comando, verificar o que podemos corrigir.</p>
+
+<p>Para isso, instale o ESLint, como comando:</p>
+
+<pre><code>yarn add --dev eslint
+</code></pre>
+
+<p>Após a instalação iremos configurar o ESLint, para isso rode o comando:</p>
+
+<pre><code>npx eslint --init
+</code></pre>
+
+<p>Apos rodar o comando, irá aparecer em seu terminal as seguintes perguntas:</p>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:640/format:webp/1*aBktbVm5c18fLP74oVGMcg.png" alt="resultado do comando acima" /></p>
+
+<p>Isso vai variar de acordo com o seu projeto. Se você já quiser adicioná-lo a um projeto existente, pule para o próximo tópico.</p>
+
+<p>Agora, voltando à configuração, após responder às perguntas da instalação, deixe seu arquivo <strong>package.json</strong> de acordo com o de baixo:</p>
+
+<pre><code>{
+    "scripts": {
+        "lint": "eslint .",
+        "lint:fix": "yarn run lint --fix"
+    },
+    "devDependencies": {
+        "eslint": "^8.48.0"
+    },
+    "license": "MIT"
+}
+</code></pre>
+
+<h2 id="%C3%89-hora-de-de-solucionar-o-problema-finalmente">É hora de de solucionar o problema (finalmente)</h2>
+
+<p>Agora chegou a hora de resolver o nosso problema principal, que é organizar nossas importações. Para isso, precisamos adicionar o plugin sort-imports no arquivo .eslintrc, como mostrado na imagem abaixo:</p>
+
+<pre><code>{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "overrides": [
+    ],
+    "parsetOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    // Adicione dentro de rules o plugin
+    "rules": {
+        "sort-imports": "error"
+    }
+}
+</code></pre>
+
+<p>Basicamente, essa regra verifica todas as declarações de importação e garante que todas as importações sejam organizadas primeiro de acordo com a sintaxe dos elementos utilizados e, em seguida, de forma alfabética pelo primeiro elemento ou nome de alias..</p>
+
+<p>Só com isso já conseguimos ter uma correção de lint ocorrendo. Para corrigir, basta rodar o comando:</p>
+
+<pre><code>yarn run lint:fix
+</code></pre>
+
+<p>Mas não para por aí, ainda podemos fazer algo ainda mais personalizado. Vamos adicionar as seguintes linhas:</p>
+
+<pre><code>// Adiocione dentro de rules o plugin
+"rules": {
+    "sort-imports": ["error", {
+        "ignoreCase": false,
+        "ignoreDeclareSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["all", "single", "multiple", "none"],
+        "allowSeparateGroup": true
+    }]
+}
+</code></pre>
+
+<p>Como diria Jack, o Estripador: “Vamos por partes!”</p>
+
+<h2 id="o-que-cada-linha-faz">O que cada linha faz</h2>
+
+<p>Linha 4: Quando true, a regra ignora a distinção entre maiúsculas e minúsculas no nome local das importações.</p>
+
+<p>Linhas 5: Ignora a classificação das instruções de declaração de importação.</p>
+
+<p>Linha 6: Ignora a classificação dos elementos em uma declaração de importação com vários membros.</p>
+
+<p>Linha 7: Existem quatro estilos diferentes, e a ordem de classificação da sintaxe de um elemento padrão é:</p>
+
+<ul>
+<li>none - módulo de importação sem ligações exportadas.</li>
+<li>all - importe todos os membros fornecidos pelas ligações exportadas.</li>
+<li>multiple - importar vários membros.</li>
+<li>single - importar um membro.</li>
+</ul>
+
+<p>Todas as quatro opções devem ser especificadas no array, mas você pode personalizar a sua ordem.</p>
+
+<p>Linha 8: Quando <em>true</em>, a regra verifica a classificação das declarações de importação apenas para aquelas que aparecem em linhas consecutivas.</p>
+
+<p>Em termos simples, se houver uma linha em branco, uma linha com um comentário ou qualquer outra instrução após uma declaração de importação, isso afetará a ordenação das declarações de importação.</p>
+
+<p>Agora vamos rodar o comando de lint para que ele nos mostre os erros, como mostrado abaixo:</p>
+
+<pre><code>yarn lint
+</code></pre>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*codmJEj7r-xmKiKoCP4oVQ.png" alt="erros informados a partir do comando acima" /></p>
+
+<p>Podemos corrigir manualmente ou podemos deixar o comando corrigir para nós, usando o seguinte comando:</p>
+
+<pre><code>yarn lint:fix
+</code></pre>
+
+<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*vNW94YnoIo2-HUgSNWMqHQ.png" alt="Alguns dos erros corrigidos a partir do comando acima" /></p>
+
+<p>Vimos que ele corrigiu a maioria dos problemas. Agora, conseguimos corrigir manualmente o restante e obter o seguinte resultado:</p>
+
+<pre><code>import A from 'alfabeto.js'
+import dois from 'numeros.js'
+
+import * as estados from 'estados.js'
+import { EspiritoSanto, MinasGerais, RioDeJaneiro, SaoPaulo } from 'cidades.js'
+import { alemanha, brasil, nigeria } from 'paises.js'
+
+import { LadyGaga } from 'artistas.js'
+</code></pre>
+
+<p>Aposto que com essa dica, seu projeto vai ter uma aparência diferente. Espero ter ajudado você com este passo a passo. Se gostou ou acredita que posso melhorar algo, deixe algum comentário abaixo!</p>
+
+<p>Obrigado e até a próxima…</p>
+
+<p>fonte: <a href="https://eslint.org/docs/latest/rules/sort-imports">https://eslint.org/docs/latest/rules/sort-imports</a></p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Os melhores cursos Gratuitos e Pagos para se tornar um Desenvolvedor de sucesso!]]></title>
+        <link href="/blog/2023/05/17/os-melhores-cursos-gratuitos-e-pagos-para-se-tornar-um-desenvolvedor-de-sucesso"/>
+        <updated>2023-05-17T00:00:00+00:00</updated>
+        <id>/blog/2023/05/17/os-melhores-cursos-gratuitos-e-pagos-para-se-tornar-um-desenvolvedor-de-sucesso</id>
+        <content type="html"><![CDATA[<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*Yx9J6m8REvc4PaMlVF-Jqg.jpeg" alt="Os melhores cursos Gratuitos e Pagos para se tornar um Desenvolvedor de sucesso!" /></p>
+
+<h2 id="l%C3%B3gica-de-programa%C3%A7%C3%A3o">Lógica de programação</h2>
+
+<p>A base da Lógica de Programação: Se você quer se destacar como desenvolvedor, é crucial ter uma sólida base em lógica de programação. Recomendo o curso de <strong>Python</strong> ministrado por Gustavo Guanabara. Além de aprender lógica, você também ganhará conhecimentos valiosos em <strong>Python</strong>. Os exercícios práticos são um diferencial, ajudando você a consolidar seus conhecimentos.</p>
+
+<p>🔗 <a href="https://www.cursoemvideo.com/curso/python-3-mundo-1/">https://www.cursoemvideo.com/curso/python-3-mundo-1/</a></p>
+
+<h2 id="html%2C-css-e-javascript">HTML, CSS e Javascript</h2>
+
+<p>A essência da web: Dominar <strong>HTML, CSS e JavaScript</strong> é fundamental para criar sites e aplicações web. Aqui estão algumas opções de cursos que considero diferenciados:</p>
+
+<ul>
+<li><strong>Curso de Desenvolvimento Completo 2023</strong>: Este curso abrange todas as tecnologias mais utilizadas no mercado, com projetos práticos.</li>
+</ul>
+
+<p><em>A Udemy frequentemente oferece mega descontos para adquirir os cursos, então fique atento(a) às promoções.</em></p>
+
+<p>🔗 <a href="https://www.udemy.com/course/web-completo/">https://www.udemy.com/course/web-completo/</a></p>
+
+<p><strong>CSS Flexbox e Grid Layout</strong>: Este curso oferece uma abordagem aprofundada sobre CSS Flexbox e Grid Layout, duas ferramentas poderosas para criar layouts responsivos. Apesar de ter um valor um pouco mais elevado que o da Udemy, você terá acesso a vários cursos adicionais. No momento, a Origamid disponibiliza dois cursos gratuitos sobre o assunto.</p>
+
+<p>🔗 <a href="https://www.origamid.com/curso/css-flexbox">https://www.origamid.com/curso/css-flexbox</a></p>
+
+<p>🔗 <a href="https://www.origamid.com/curso/css-grid-layout">https://www.origamid.com/curso/css-grid-layout</a></p>
+
+<h2 id="backend">Backend</h2>
+
+<p>Se você deseja entrar no mundo de backend, o Curso de <strong>PHP</strong> do Gustavo Guanabara é uma excelente opção. Aprender <strong>PHP</strong> é altamente relevante, já que há inúmeras oportunidades de emprego nessa área. Recomendo também o curso de <strong>PHP orientada a objetos POO</strong> para ampliar seus conhecimentos.</p>
+
+<p>🔗 <a href="https://www.cursoemvideo.com/curso/php-basico/">https://www.cursoemvideo.com/curso/php-basico/</a></p>
+
+<p>🔗 <a href="https://www.cursoemvideo.com/curso/php-basico/">https://www.cursoemvideo.com/curso/php-basico/</a></p>
+
+<h2 id="banco-de-dados">Banco de Dados</h2>
+
+<p>Manipulando dados com <strong>SQL</strong>: Agora que você já sabe <strong>PHP</strong>, é hora de aprender a manipular dados em bancos de dados. Nada melhor do que o <strong>Curso de SQL do Curso em Vídeo</strong>, ministrado por um dos melhores professores do mercado. O curso aborda desde conceitos básicos como <strong>SELECT</strong> até operações avançadas, como <strong>INNER JOIN</strong>.</p>
+
+<p>🔗 <a href="https://www.cursoemvideo.com/curso/mysql/">https://www.cursoemvideo.com/curso/mysql/</a></p>
+
+<h2 id="git-e-github">Git e Github</h2>
+
+<p>Gerenciando seus projetos: Por fim, para salvar e compartilhar seus projetos, é essencial ter conhecimento em <strong>Git</strong> e <strong>Github</strong>. Recomendo o curso do Bruno Orlandi na Udemy, que abrange desde o básico até tópicos avançados.</p>
+
+<p>🔗 <a href="https://www.udemy.com/course/git-e-github/">https://www.udemy.com/course/git-e-github/</a></p>
+
+<p>Com essas recomendações, você terá um ótimo ponto de partida para sua jornada como desenvolvedor. Lembre-se de que a evolução é contínua, então, à medida que você progride, novas tecnologias e habilidades se tornarão relevantes. Nunca pare de estudar e evoluir! 🚀</p>
+
+<p><strong>Bônus</strong>: Lembre-se: a persistência é a chave para o sucesso. Nunca desista de sua jornada! Crie um plano de estudos consistente, adaptado à sua realidade, e sua oportunidade certamente chegará.</p>
+
+<p>Espero que esses cursos sejam úteis para você. Boa sorte em sua jornada de desenvolvimento! ✨💻</p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[ID Sequencial vs. UUID em SQL: qual é o melhor identificador para sua tabela?]]></title>
+        <link href="/blog/2023/03/31/id-sequencial-vs-uuid-em-sql-qual-e-o-melhor-identificador-para-sua-tabela"/>
+        <updated>2023-03-31T00:00:00+00:00</updated>
+        <id>/blog/2023/03/31/id-sequencial-vs-uuid-em-sql-qual-e-o-melhor-identificador-para-sua-tabela</id>
+        <content type="html"><![CDATA[<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*IU_rWat3qmb2snZldTH6cQ.png" alt="ID Sequencial vs. UUID em SQL: qual é o melhor identificador para sua tabela?" /></p>
+
+<p>E ai, galera!</p>
+
+<p>Recentemente eu estava estudando sobre Banco de Dados <a href="https://www.postgresql.org/">PostegreSQL</a>, e reparei que o instrutor estava se referenciando ao identificador da tabela de uma forma não comum para mim. Ele usava ao <a href="https://www.postgresql.org/docs/current/datatype-uuid.html">UUID</a> ao invés de um ID, e por isso eu resolvi entender melhor e compartilhar esse breve conteúdo, espero que gostem.</p>
+
+<p>Quando criamos tabelas em SQL, precisamos de um identificador exclusivo para cada linha da tabela. O ID sequencial é um número inteiro que é atribuído automaticamente pelo sistema de gerenciamento de banco de dados (DBMS) a cada nova linha adicionada à tabela. Esse número é geralmente incrementado em um valor fixo a cada nova linha adicionada.</p>
+
+<p>Por exemplo:</p>
+
+<pre><code>CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255),
+    email VARCHAR(255)
+);
+</code></pre>
+
+<p>Nesse exemplo, o ID é um inteiro que é gerado automaticamente pelo DBMS a cada nova linha adicionada à tabela clientes. O uso de IDs sequenciais é simples e fácil de implementar, e pode ser muito eficiente em termos de desempenho para grandes tabelas, pois não há necessidade de gerar um valor exclusivo complexo para cada nova linha.</p>
+
+<p>Por outro lado, o UUID é um identificador exclusivo global que é gerado aleatoriamente e é garantido que nunca se repetirá. Isso significa que o valor do UUID é muito menos previsível do que um ID sequencial, e é muito improvável que duas linhas na mesma ou em tabelas diferentes tenham o mesmo valor de UUID. Por exemplo:</p>
+
+<pre><code>CREATE TABLE produtos (
+    id UUID PRIMARY KEY,
+    nome VARCHAR(255),
+    preco DECIMAL(10,2)
+);
+</code></pre>
+
+<p>Nesse exemplo, o ID é um UUID que é gerado aleatoriamente pelo DBMS a cada nova linha adicionada à tabela produtos. O uso de UUIDs garante que o valor exclusivo de cada linha na tabela seja mantido, mesmo se os dados forem distribuídos em vários servidores.</p>
+
+<h2 id="id-sequencial">ID Sequencial</h2>
+
+<h3 id="pontos-positivos%3A">Pontos Positivos:</h3>
+
+<ul>
+<li>Fácil de implementar</li>
+<li>Geralmente muito eficiente em termos de desempenho para grandes tabelas</li>
+<li>Possibilita uma ordenação das linhas de acordo com a ordem de inserção</li>
+</ul>
+
+<h3 id="pontos-negativos%3A">Pontos negativos:</h3>
+
+<ul>
+<li>Não garante a exclusividade dos valores gerados, uma vez que valores duplicados podem ser gerados se houver alguma falha no sistema</li>
+<li>Torna mais fácil a tentativa de adivinhar valores de ID subsequentes e, portanto, menos seguro</li>
+</ul>
+
+<h2 id="uuid">UUID</h2>
+
+<h3 id="pontos-positivos%3A">Pontos positivos:</h3>
+
+<ul>
+<li>Garante a exclusividade dos valores gerados, mesmo se os dados forem distribuídos em vários servidores</li>
+<li>É muito menos previsível do que um ID sequencial, tornando mais difícil a tentativa de adivinhar valores subsequentes e, portanto, mais seguro</li>
+</ul>
+
+<h3 id="pontos-negativos%3A">Pontos Negativos:</h3>
+
+<ul>
+<li>Pode ser mais difícil de implementar em comparação com um ID sequencial</li>
+<li>Pode ter um desempenho um pouco pior em grandes tabelas, devido à complexidade dos valores gerados</li>
+<li>Não permite uma ordenação das linhas de acordo com a ordem de inserção, o que pode ser um problema em certas aplicações</li>
+</ul>
+
+<p>Em resumo, a principal diferença entre o uso de um ID sequencial e um UUID para identificar tabelas em SQL é a previsibilidade do valor gerado. IDs sequenciais são previsíveis e fáceis de implementar, mas não são garantidos como exclusivos, enquanto os UUIDs são muito menos previsíveis e garantidos como exclusivos. A escolha entre usar um ID sequencial ou um UUID dependerá das necessidades específicas do sistema e das características de desempenho e segurança desejadas.</p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Algumas dicas para aprender inglês na área de tecnologia]]></title>
+        <link href="/blog/2023/02/28/algumas-dicas-para-aprender-ingles-na-area-de-tecnologia"/>
+        <updated>2023-02-28T00:00:00+00:00</updated>
+        <id>/blog/2023/02/28/algumas-dicas-para-aprender-ingles-na-area-de-tecnologia</id>
+        <content type="html"><![CDATA[<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*Z9FRQRHMq6G53dCYaoi4Ew.png" alt="Algumas dicas para aprender inglês na área de tecnologia" /></p>
+
+<p>Olá, pessoal!</p>
+
+<p>Hoje em dia, a tecnologia está em constante evolução e cada vez mais presente em nossas vidas. Por isso, é importante que os profissionais da área de tecnologia estejam sempre atualizados e preparados para lidar com as demandas do mercado. E uma das habilidades fundamentais para isso é o conhecimento da língua inglesa.</p>
+
+<p>O inglês é a língua universal dos negócios e da tecnologia, e o domínio dessa língua pode abrir portas para oportunidades de carreira, permitindo que os profissionais se comuniquem efetivamente com colegas, clientes e parceiros em todo o mundo.</p>
+
+<p>Além disso, muitos recursos e ferramentas importantes na área de tecnologia, como documentação, tutoriais, fóruns e comunidades online, são escritos em inglês. E sem o conhecimento dessa língua, os profissionais podem perder informações valiosas e ficar para trás em relação aos seus colegas.</p>
+
+<p>Então, se você ainda não domina o inglês, aqui estão algumas dicas que podem ajudá-lo a começar:</p>
+
+<p><strong>Faça um curso de inglês</strong>: Existem muitas opções de cursos de inglês online ou presenciais. Escolha um que se adapte às suas necessidades e comece a estudar.</p>
+
+<p><strong>Assista a vídeos em inglês</strong>: Assista a vídeos em inglês com legendas em português e, quando se sentir mais confiante, tente assistir sem as legendas.</p>
+
+<p><strong>Ouça podcasts em inglês</strong>: Existem muitos podcasts em inglês sobre tecnologia e outras áreas. Ouça alguns e tente acompanhar a conversa.</p>
+
+<p><strong>Leia em inglês</strong>: Leia artigos e notícias em inglês sobre tecnologia e outras áreas. Comece com textos mais simples e vá aumentando o nível de dificuldade aos poucos.</p>
+
+<p><strong>Pratique conversação</strong>: Procure amigos ou colegas que falam inglês e pratique conversação com eles.</p>
+
+<p>Lembre-se de que aprender inglês é uma jornada contínua, e a prática constante é a chave para o sucesso. Então, comece agora mesmo a aprimorar suas habilidades em inglês e prepare-se para alcançar o sucesso em sua carreira na área de tecnologia.</p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Thunder Client: será o melhor Client REST?]]></title>
+        <link href="/blog/2023/02/23/thunder-client-sera-o-melhor-client-rest"/>
+        <updated>2023-02-23T00:00:00+00:00</updated>
+        <id>/blog/2023/02/23/thunder-client-sera-o-melhor-client-rest</id>
+        <content type="html"><![CDATA[<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*QudcIgp5KGyBccUOGWi1Gw.gif" alt="Thunder Client: será o melhor Client REST?" /></p>
+
+<p>E ai galera….</p>
+
+<p>A poucas semanas eu vi um parceiro de profissão compartilhar algo, que achei incrível e que parece que ajudou bastante gente.</p>
+
+<p>De lá pra cá, venho pensando em fazer o mesmo e assim ajudar pelo menos uma pessoa por aqui!</p>
+
+<p>O que eu venho falar hoje, é sobre uma extensão para os amantes da ferramenta <strong>VSCODE</strong>, que particularmente eu acho perfeita.</p>
+
+<p>Com <strong>mais de 1200 downloads</strong> o Thunder Clint, basicamente ajuda a fazer requisição HTTP, muito similar as ferramentas <strong>POSTMAN</strong> e o <strong>Insomnia</strong>, sendo um pouco menos robusta por ser uma extensão. Mas não pense que ela fica muito abaixo das concorrentes, pois essa pequena extensão não deve nada em quesito de funcionalidade, e cada nova versão vem ganhando mais funcionalidades.</p>
+
+<p>Um ponto que destaco, é que ela é altamente produtiva, pois você não precisa sair do VSCODE para fazer as requisições, se você como eu, gosta de manter tudo centralizado, você vai entender perfeitamente o quão produtivo é utilizar o <a href="https://www.linkedin.com/company/thunderclient/">Thunder Client</a>. Além disso, ela conta também com:</p>
+
+<ul>
+<li>interface muito amigável;</li>
+<li>suporte para coleções e variáveis de ambiente;</li>
+<li>script de teste;</li>
+<li>suporte ao tema instalado;</li>
+<li>importação e exportação para o POSTMAN;</li>
+</ul>
+
+<p>Maneiro né, nem parece uma extensão. Hoje eu não vivo sem!</p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Repository Patterns: Porque devemos usar?]]></title>
+        <link href="/blog/2023/02/23/repository-patterns-porque-devemos-usar"/>
+        <updated>2023-02-23T00:00:00+00:00</updated>
+        <id>/blog/2023/02/23/repository-patterns-porque-devemos-usar</id>
+        <content type="html"><![CDATA[<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*OAFJOw3aphju1Fm7ksDrtA.png" alt="Repository Patterns: Porque devemos usar?" /></p>
+
+<h2 id="aqui-est%C3%A3o-algumas-informa%C3%A7%C3%B5es-importantes-sobre-o-repository-pattern">Aqui estão algumas informações importantes sobre o Repository Pattern</h2>
+
+<h3 id="import%C3%A2ncia">Importância</h3>
+
+<p>Separação de Responsabilidades: O Repository Pattern permite separar a lógica de acesso a dados da lógica de negócios, tornando o código mais organizado e fácil de manter.</p>
+
+<p>Abstração: O Repository fornece uma abstração de alto nível para o acesso a dados, tornando-o mais fácil de usar e reduzindo a complexidade do código.</p>
+
+<p>Testabilidade: Ao usar o Repository, é possível escrever testes de unidade para a lógica de negócios sem se preocupar com o acesso a dados. Isso torna o teste mais fácil e confiável.</p>
+
+<h3 id="pontos-fortes">Pontos Fortes</h3>
+
+<p>Organização: O Repository torna o código mais organizado, separando as responsabilidades entre a lógica de negócios e o acesso a dados.</p>
+
+<p>Reutilização: O Repository permite reutilizar o mesmo código de acesso a dados em diferentes partes do projeto, reduzindo a duplicação de código.</p>
+
+<p>Testabilidade: O Repository torna o teste de unidade mais fácil e confiável, permitindo que os testes sejam escritos para a lógica de negócios sem se preocupar com o acesso a dados.</p>
+
+<h3 id="pontos-fracos">Pontos Fracos</h3>
+
+<p>Complexidade: O Repository Pattern pode adicionar alguma complexidade ao código, especialmente se o projeto é pequeno e não requer separação de responsabilidades.</p>
+
+<p>Overhead: A implementação do Repository Pattern pode adicionar algum overhead ao código, pois requer a criação de uma camada adicional de abstração.</p>
+
+<h3 id="por-que-usar-em-um-projeto-repository-pattern">Por que usar em um projeto Repository Pattern</h3>
+
+<p>Separação de responsabilidades: O Repository Pattern separa a lógica de negócios da lógica de acesso a dados, tornando o código mais organizado e fácil de manter.</p>
+
+<p>Reutilização de código: O Repository Pattern permite reutilizar o mesmo código de acesso a dados em diferentes partes do projeto, reduzindo a duplicação de código.</p>
+
+<p>Testabilidade: O Repository Pattern torna o teste de unidade mais fácil e confiável, permitindo que os testes sejam escritos para a lógica de negócios sem se preocupar com o acesso a dados.</p>
+
+<p>Facilidade de manutenção: O Repository Pattern torna o código mais fácil de manter, pois separa a lógica de negócios da lógica de acesso a dados, tornando mais fácil fazer alterações no código sem afetar outras partes do projeto.</p>
+
+<h3 id="vamos-ver-um-exemplo-feito-em-node-na-pr%C3%A1tica%21">Vamos ver um exemplo feito em Node na prática!</h3>
+
+<pre><code>listUsers(rquest, response) {
+    const { order } = request.query
+
+    const sortedUsers = user.sort((a, b) =&gt; {
+        if (order === 'desc') return a.id &lt; b.id ? 1 : -1
+
+        return a.id &gt; b.id ? 1 : -1
+    })
+
+    response.send(200, JSON.stringfy(sortedUsers))
+}
+</code></pre>
+
+<p>Temos na imagem acima, um exemplo sem o uso de Repository Patterns, onde vemos que toda a lógica de manipulação dos dados fica sob responsabilidade do método do Controller.</p>
+
+<p>Apesar de ser um código simples, se for uma aplicação escalável, devemos usar o padrão recomendando para tercerizar a responsabilidade dessa manipulação. Vamos ver como ficaria o resultado:</p>
+
+<p>veja como o método que lista os usuários ficou mais clean e agora lida somente com a sua responsabilidade.</p>
+
+<pre><code>listUsers(rquest, response) {
+    const { order } = request.query
+
+    const sortedUsers = UserRepository.orderBy(order, users)
+
+    response.send(200, JSON.stringfy(sortedUsers))
+}
+</code></pre>
+
+<p>Criamos um novo diretório, repository/UserRepository, onde vamos lidar com o método de manipulação de ordenação.</p>
+
+<pre><code>class UserRepository {
+    orderBy(order, users) {
+        const sorted = users.sort((a, b) =&gt; {
+            if (order === 'desc') return a.id &lt; b.id ? 1 : -1
+
+            return a.id &gt; b.id ? 1 : -1
+        })
+
+        return sorted
+    }
+}
+
+module.exports = new UserRepository();
+</code></pre>
+
+<p>Apesar de parecer mais trabalhoso, na prática iremos entender melhor a importância desse Domain-Driven Design, onde iremos ter muito mais produtividade e manutenção mais fácil no código.</p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Deploy na Digital Ocean MinhaExperiência]]></title>
+        <link href="/blog/2021/07/04/deploy-na-digital-ocean-minhaexperiencia"/>
+        <updated>2021-07-04T00:00:00+00:00</updated>
+        <id>/blog/2021/07/04/deploy-na-digital-ocean-minhaexperiencia</id>
+        <content type="html"><![CDATA[<p><img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/1*dm2Lt6gajeN4mGS8g-eD9g.jpeg" alt="Deploy na Digital Ocean MinhaExperiência" /></p>
+
+<p>Por causa de uma possível demanda que está por vir, resolvi estudar a hospedagem da Digital Ocean, que é uma concorrente da AWS. Vendo alguns vídeos resolvi meter a mão, fiz alguns teste de configuração e já me deparei com a primeira pedra no caminho… como é “complexo” configurar o servidor do 0, logo eu que estava acostumado com Hostgator.</p>
+
+<p>Depois de ter instalado Ubunto, Apache e o PHP com os diversos comandos, o MySql deu ruim… ahhh MySql sempre me dando uma rasteira. Passei um sufoco com a adição de privilégios que nunca dava certo, mas no final como sempre, era bobeira, bobeira essa que me fez lembrar meus tempos de Fedora. Enfim, o servidor ficou no esquema para receber a aplicação teste.</p>
+
+<p>Próximo passo: pra ser mais ousado eu queria enviar a aplicação via git na qual já estava no GitLab. Depois de diversas horas configurando e testando, consegui finalmente enviar um arquivo .txt do local para o servidor e tudo ficou perfeito(eu acho).</p>
+
+<p>Apesar da trabalheira, percebi que é mais fácil do que parece e minha aplicação nunca mais irá ver FileZilla na vida, uma aprendizado que ficou e que agora estou preparado para a demanda citada no inicio na qual acredito que não irei ter supressas o_o</p>
+
+<p>Em breve vou fazer um passo a passo, explicando tudo o que eu fiz.</p>
+]]></content>
+    </entry>
+    </feed>
