@@ -1,7 +1,7 @@
 {
   "scripts": {
     "tail": "npx tailwindcss -i ./source/assets/css/app.css -o ./source/build/css/app.css",
-    "build": "encore dev && npx tailwindcss -i ./source/assets/css/app.css -o ./source/build/css/app.css"
+    "build": "encore dev && npx tailwindcss -i ./source/assets/css/app.css -o ./source/build/css/app.css --minify"
   },
   "dependencies": {
     "@symfony/webpack-encore": "^0.24.0",
