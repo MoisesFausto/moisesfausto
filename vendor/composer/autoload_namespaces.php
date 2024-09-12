@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'dflydev\\util\\antPathMatcher' => array($vendorDir . '/dflydev/ant-path-matcher/src'),
+    'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Sculpin\\Composer\\SculpinThemePlugin\\' => array($vendorDir . '/sculpin/sculpin-theme-composer-plugin/src'),
     'Dflydev\\PlaceholderResolver' => array($vendorDir . '/dflydev/placeholder-resolver/src'),

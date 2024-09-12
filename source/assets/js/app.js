@@ -30,5 +30,13 @@ if (descriptions.length) {
     })
 }
 
+// Easter Egg
+window.addEventListener('load', () => {
+    console.clear();
+
+    console.log('%cMoisés Fausto', 'color: #f97316; font-size: 3rem; font-weight: 700')
+    console.log('%cFull Stack Developer | PHP | Laravel | Vue Js', 'color: #f97316; font-size: 1.25rem; font-weight: 400')
+    console.log('%cOuuu, o que cê ta fazendo aqui??? 🫣', 'font-size: 1.25rem; font-weight: 400')
+})
 
 // @todo Restore HighlightJS
