@@ -3,11 +3,113 @@
     <title><![CDATA[Moisés Fausto | Full Stack Developer | PHP | Laravel | Vue Js]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2024-09-12T03:31:38+00:00</updated>
+    <updated>2024-09-16T20:17:07+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[Moisés Fausto]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[6 truques do PHP que você deveria conhecer]]></title>
+        <link href="/blog/2024/10/12/6-truques-do-php-que-voce-deveria-conhecer"/>
+        <updated>2024-10-12T00:00:00+00:00</updated>
+        <id>/blog/2024/10/12/6-truques-do-php-que-voce-deveria-conhecer</id>
+        <content type="html"><![CDATA[<p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*g-rV3DO_WcGWa4HrwRrOow.png" alt="6 truques do PHP que você deveria conhecer" /></p>
+
+<p>Ao começar no mundo do desenvolvimento, muitas vezes não damos a devida atenção a conhecimentos mais avançados sobre as tecnologias com as quais trabalhamos, seja pela correria do dia a dia ou por inúmeros outros motivos. Vamos começar!</p>
+
+<h2 id="desenvolvendo-fun%C3%A7%C3%B5es-mais-flex%C3%ADveis-usando-closure">Desenvolvendo funções mais flexíveis usando Closure</h2>
+
+<p>A <strong>Closure</strong> é um recurso do PHP que torna as funções anônimas mais poderosas e flexíveis.</p>
+
+<p>Funções anônimas são aquelas que podem ser atribuídas a variáveis, passadas como argumentos para outras funções ou definidas dinamicamente. A classe Closure abrange essas funções e permite o uso de variáveis externas dentro delas.</p>
+
+<pre><code>$olaMundo = function ($nome) {
+  echo "Olá, $nome";
+};
+
+$olaMundo("Pedrinho"); // Olá, Pedrinho
+
+// Closure Binding
+$olaMundo = function () use ($nome) {
+  echo "Olá, $nome";
+};
+
+$nome = "Pedrinho";
+$olaMundo(); // Olá, Pedrinho
+</code></pre>
+
+<h2 id="otimizando-uso-de-mem%C3%B3ria-com-generators">Otimizando uso de memória com Generators</h2>
+
+<p>As funções <strong>Generators</strong> são essenciais para otimizar o uso de memória quando lidamos com grandes conjuntos de dados. Em vez de gerar todos os dados de uma vez, elas os produzem conforme a necessidade, economizando recursos.</p>
+
+<pre><code>function getNumeros () {
+  for ($i = 0; $i &lt; 1000; $i++) {
+    yield $i;
+  };
+};
+
+foreach (getNumeros() as $numero) {
+  echo $numero . " ";
+};
+</code></pre>
+
+<h2 id="simplificando-arrays-complexos-com-array_reduce">Simplificando arrays complexos com array_reduce</h2>
+
+<p><strong>array_reduce</strong> tem como objetivo reduzir o array a um único valor utilizando alguma operação aritmética (+, -, %, *, ...) para tal.</p>
+
+<pre><code>$numeros = [1,2,3,4,5];
+
+$soma = array_reduce($numeros, fn($carry, $item) =&gt; $carry + $item, 0);
+
+echo $soma; // 15
+</code></pre>
+
+<p>Aqui, temos 3 parâmetros. O <strong>primeiro</strong> é o array original que servirá como base para a operação aritmética, o <strong>segundo</strong> é a função que irá processar o cálculo, e o <strong>terceiro</strong> (opcional) servirá como valor inicial da operação.</p>
+
+<h2 id="uso-eficiente-de-spl-lib-padr%C3%A3o-do-php">Uso eficiente de SPL (lib padrão do PHP)</h2>
+
+<p>A SPL oferece diversas classes e interfaces úteis já integradas ao PHP. Um exemplo é o <strong>SplFixedArray</strong>, que otimiza o uso de memória ao trabalhar com arrays de tamanho fixo.</p>
+
+<pre><code>$array = new SplFixedArray(10);
+$array[0] = 1;
+echo $array[0]; // 1
+</code></pre>
+
+<h2 id="usar-intl---fun%C3%A7%C3%B5es-de-internacionaliza%C3%A7%C3%A3o">Usar Intl - funções de internacionalização</h2>
+
+<p>A extensão <strong>Intl</strong> é fundamental no desenvolvimento de aplicações multilíngues. Ela oferece classes como <strong>NumberFormatter</strong>, <strong>MessageFormatter</strong> e <strong>Locale</strong>, que facilitam a formatação de números e mensagens de acordo com as convenções de diferentes países.</p>
+
+<pre><code>$numeroFormatado = new NumberFormatter('pt_BR', NumberFormatter::CURRENCY);
+
+echo $numeroFormatado-&gt;formatCurrency(1278.98, 'BRL'); // R$1.278,98
+</code></pre>
+
+<h2 id="trabalhar-com-fun%C3%A7%C3%B5es-stream-para-arquivos-grandes">Trabalhar com funções stream para arquivos grandes</h2>
+
+<p>Funções de <strong>stream</strong> como <strong>fopen</strong>, <strong>fread</strong>, <strong>fwrite</strong> são importantes para usar a memória de maneira eficaz ao trabalhar com arquivos grandes.</p>
+
+<ul>
+<li>fopen abre o arquivo</li>
+<li>fread lê o arquivo</li>
+<li>fwrite permite editar o arquivo.</li>
+</ul>
+
+<pre><code>$arquivo = fopen("arquivo.txt", "r");
+
+while (($linha = fgets($file)) !== false) {
+  echo $linha;
+}
+
+fclose($arquivo);
+</code></pre>
+
+<p>Essas são apenas algumas das funcionalidades incríveis que o PHP oferece. Claro, existem muitos outros recursos, mas escolhi essas 6 para manter o conteúdo direto e útil. Com essas dicas, você já conseguirá melhorar muito seus projetos. Espero que tenha gostado das sugestões e até a próxima!</p>
+
+<h3 id="refer%C3%AAncias">Referências</h3>
+
+<p><a href="https://medium.com/write-a-catalyst/6-php-knowledge-you-didnt-know-you-needed-8c268582921a">6 PHP Knowledge You Didn’t Know You Needed</a></p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[Arrumando a casa com sort-imports do ESLint]]></title>
         <link href="/blog/2023/09/05/arrumando-a-casa-com-sort-imports-do-eslint"/>

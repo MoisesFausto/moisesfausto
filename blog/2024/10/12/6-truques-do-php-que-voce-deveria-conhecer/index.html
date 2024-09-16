@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Moisés Fausto"/>
+
+    <title>6 truques do PHP que você deveria conhecer</title>
+
+<meta name="description" content="Neste post, você aprenderá 6 dicas rápidas para melhorar seu código, especialmente aquele código legado.">
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2024/10/12/6-truques-do-php-que-voce-deveria-conhecer" />
+<meta property="og:image" content="/assets/images/blog/cover-post.png" />
+
+<meta name="robots" content="index, follow">
+
+<link rel="apple-touch-startup-image" href="/assets/images/blog/cover-post.png">
+
+    <meta property="og:image:width" content="1080">
+    <meta property="og:image:height" content="850">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="shortcut icon" sizes="1050x1050" href="/assets/icons/logo.png">
+    <link rel="apple-touch-icon" sizes="1050x1050" href="/assets/icons/logo.png">
+
+    <link rel="stylesheet" href="/build/css/app.css"/>
+
+        
+        <script src="https://kit.fontawesome.com/0d061613ad.js" crossorigin="anonymous"></script>
+    </head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+<header class="bg-white shadow-md">
+    <nav class="bg-white dark:bg-gray-900 border-gray-200">
+        <div class="container flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="/" aria-label="Home" class="text-xl font-bold text-gray-800">
+                <img src="/assets/images/logo.png" alt="Moisés Fausto" class="w-16 h-16 rounded-full object-cover mx-auto border-4 border-white dark:bg-gray-900 shadow-lg">
+            </a>
+            <button id="menu-collapse" data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false" title="menu" aria-label="menu">
+                <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-900">
+                    <li>
+                        <a href="/#home" aria-label="Home" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300" aria-current="page">Home</a>
+                    </li>
+                    <li>
+                        <a href="/#about" aria-label="Sobre" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Sobre</a>
+                    </li>
+                    <li>
+                        <a href="/#services" aria-label="Serviços" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Serviços</a>
+                    </li>
+                    <li>
+                        <a href="/#works" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Trabalhos</a>
+                    </li>
+                    <li>
+                        <a href="/#contact" aria-label="Contato" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Contato</a>
+                    </li>
+                    <li>
+                        <a href="/posts/" aria-label="Posts" class="text-gray-600 dark:text-white hover:text-gray-800 transition duration-300">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl">
+        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+            <header class="pt-4 md:pt-7 pb-4 md:pb-7 mb-4">
+                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">6 truques do PHP que você deveria conhecer</h1>
+                                <p class="lead dark:text-white">Neste post, você aprenderá 6 dicas rápidas para melhorar seu código, especialmente aquele código legado.</p>
+                            </header>
+            <section class="content dark:text-white">
+                <p><img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*g-rV3DO_WcGWa4HrwRrOow.png" alt="6 truques do PHP que você deveria conhecer" /></p>
+
+<p>Ao começar no mundo do desenvolvimento, muitas vezes não damos a devida atenção a conhecimentos mais avançados sobre as tecnologias com as quais trabalhamos, seja pela correria do dia a dia ou por inúmeros outros motivos. Vamos começar!</p>
+
+<h2 id="desenvolvendo-fun%C3%A7%C3%B5es-mais-flex%C3%ADveis-usando-closure">Desenvolvendo funções mais flexíveis usando Closure</h2>
+
+<p>A <strong>Closure</strong> é um recurso do PHP que torna as funções anônimas mais poderosas e flexíveis.</p>
+
+<p>Funções anônimas são aquelas que podem ser atribuídas a variáveis, passadas como argumentos para outras funções ou definidas dinamicamente. A classe Closure abrange essas funções e permite o uso de variáveis externas dentro delas.</p>
+
+<pre><code>$olaMundo = function ($nome) {
+  echo "Olá, $nome";
+};
+
+$olaMundo("Pedrinho"); // Olá, Pedrinho
+
+// Closure Binding
+$olaMundo = function () use ($nome) {
+  echo "Olá, $nome";
+};
+
+$nome = "Pedrinho";
+$olaMundo(); // Olá, Pedrinho
+</code></pre>
+
+<h2 id="otimizando-uso-de-mem%C3%B3ria-com-generators">Otimizando uso de memória com Generators</h2>
+
+<p>As funções <strong>Generators</strong> são essenciais para otimizar o uso de memória quando lidamos com grandes conjuntos de dados. Em vez de gerar todos os dados de uma vez, elas os produzem conforme a necessidade, economizando recursos.</p>
+
+<pre><code>function getNumeros () {
+  for ($i = 0; $i &lt; 1000; $i++) {
+    yield $i;
+  };
+};
+
+foreach (getNumeros() as $numero) {
+  echo $numero . " ";
+};
+</code></pre>
+
+<h2 id="simplificando-arrays-complexos-com-array_reduce">Simplificando arrays complexos com array_reduce</h2>
+
+<p><strong>array_reduce</strong> tem como objetivo reduzir o array a um único valor utilizando alguma operação aritmética (+, -, %, *, ...) para tal.</p>
+
+<pre><code>$numeros = [1,2,3,4,5];
+
+$soma = array_reduce($numeros, fn($carry, $item) =&gt; $carry + $item, 0);
+
+echo $soma; // 15
+</code></pre>
+
+<p>Aqui, temos 3 parâmetros. O <strong>primeiro</strong> é o array original que servirá como base para a operação aritmética, o <strong>segundo</strong> é a função que irá processar o cálculo, e o <strong>terceiro</strong> (opcional) servirá como valor inicial da operação.</p>
+
+<h2 id="uso-eficiente-de-spl-lib-padr%C3%A3o-do-php">Uso eficiente de SPL (lib padrão do PHP)</h2>
+
+<p>A SPL oferece diversas classes e interfaces úteis já integradas ao PHP. Um exemplo é o <strong>SplFixedArray</strong>, que otimiza o uso de memória ao trabalhar com arrays de tamanho fixo.</p>
+
+<pre><code>$array = new SplFixedArray(10);
+$array[0] = 1;
+echo $array[0]; // 1
+</code></pre>
+
+<h2 id="usar-intl---fun%C3%A7%C3%B5es-de-internacionaliza%C3%A7%C3%A3o">Usar Intl - funções de internacionalização</h2>
+
+<p>A extensão <strong>Intl</strong> é fundamental no desenvolvimento de aplicações multilíngues. Ela oferece classes como <strong>NumberFormatter</strong>, <strong>MessageFormatter</strong> e <strong>Locale</strong>, que facilitam a formatação de números e mensagens de acordo com as convenções de diferentes países.</p>
+
+<pre><code>$numeroFormatado = new NumberFormatter('pt_BR', NumberFormatter::CURRENCY);
+
+echo $numeroFormatado-&gt;formatCurrency(1278.98, 'BRL'); // R$1.278,98
+</code></pre>
+
+<h2 id="trabalhar-com-fun%C3%A7%C3%B5es-stream-para-arquivos-grandes">Trabalhar com funções stream para arquivos grandes</h2>
+
+<p>Funções de <strong>stream</strong> como <strong>fopen</strong>, <strong>fread</strong>, <strong>fwrite</strong> são importantes para usar a memória de maneira eficaz ao trabalhar com arquivos grandes.</p>
+
+<ul>
+<li>fopen abre o arquivo</li>
+<li>fread lê o arquivo</li>
+<li>fwrite permite editar o arquivo.</li>
+</ul>
+
+<pre><code>$arquivo = fopen("arquivo.txt", "r");
+
+while (($linha = fgets($file)) !== false) {
+  echo $linha;
+}
+
+fclose($arquivo);
+</code></pre>
+
+<p>Essas são apenas algumas das funcionalidades incríveis que o PHP oferece. Claro, existem muitos outros recursos, mas escolhi essas 6 para manter o conteúdo direto e útil. Com essas dicas, você já conseguirá melhorar muito seus projetos. Espero que tenha gostado das sugestões e até a próxima!</p>
+
+<h3 id="refer%C3%AAncias">Referências</h3>
+
+<p><a href="https://medium.com/write-a-catalyst/6-php-knowledge-you-didnt-know-you-needed-8c268582921a">6 PHP Knowledge You Didn’t Know You Needed</a></p>
+
+                <div class="w-full max-h-52">
+                    <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                        <img class="rounded-lg" src="/assets/images/marketing/672x208-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    </a>
+                </div>
+            </section>
+            <section class="taxonomies mt-5">
+                <div class="taxonomy">
+                    <strong class="dark:text-white">tags:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">PHP</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">perfomance</span>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">código</span>
+                                    </div>
+                <div class="taxonomy">
+                    <strong class="dark:text-white">categoria:</strong>
+                                        <span class="bg-orange-100 text-gray-600 text-xs font-medium me-2 px-2.5 py-0.5 mb-1 rounded dark:bg-gray-700 dark:text-gray-300">dicas</span>
+                                    </div>
+            </section>
+            <footer class="mt-5">
+                <div>
+                    <p class="text-xl font-bold text-gray-900 dark:text-white">Moisés Fausto</p>
+                    <p class="text-base text-gray-500 dark:text-white-400">Software Developer</p>
+                    <p class="text-base text-gray-500 dark:text-white-400"><time pubdate datetime="1728691200" title="{ page.date|format_date(pattern='Y-MM-dd') }}">Publicado em 12 de outubro de 2024</time></p>
+                </div>
+            </footer>
+        </article>
+        <aside class="h-screen transition-transform -translate-x-full sm:translate-x-0 hidden md:block">
+
+                                            <figure class="relative max-w-sm mb-5 transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                    <a href="/blog/2023/09/05/arrumando-a-casa-com-sort-imports-do-eslint" aria-label="post anterior">
+                        <img class="rounded-lg w-80" src="/assets/images/blog/cover-post.png" alt="Arrumando a casa com sort-imports do ESLint">
+                    </a>
+                    <figcaption class="absolute bg-black/70 rounded-lg p-4 text-lg text-white bottom-0">
+                        <p class="text-lg font-bold">Arrumando a casa com sort-imports do ESLint</p>
+                    </figcaption>
+                </figure>
+                                            
+            <figure class="max-w-sm transition-all duration-300 cursor-pointer">
+                <a href="https://www.amazon.com.br/dp/B0BXQNRRFQ" aria-label="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                    <img class="rounded-lg w-80" src="/assets/images/marketing/320x272-ebook-javascript-para-iniciantes.png" alt="Curso de Programação com Javascript para Iniciantes: Guia Prático">
+                </a>
+            </figure>
+        </aside>
+    </div>
+</div>
+</main>
+
+<footer class="bg-orange-600 text-white py-4">
+    <div class="container mx-auto px-6 text-center">
+        <p>&copy; <span id="current-year"></span> Moisés Fausto. All rights reserved. <a class="hidden" aria-label="RSS" href="/atom.xml">RSS</a></p>
+    </div>
+</footer>
+
+<script type="text/javascript" src="/build/js/app.js"></script>
+
+
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XWECERXMS6"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-XWECERXMS6');
+	</script>
+
+
+</body>
+</html>
