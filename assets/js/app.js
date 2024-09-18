@@ -30,7 +30,50 @@ if (descriptions.length) {
     })
 }
 
+// Incrementa Jobs
+const jobs = document.getElementById('jobs');
+window.addEventListener('scroll', () => {
+    if (jobs && jobs.getBoundingClientRect().y >= 970) {
+        let count = 0;
+        const interval = setInterval(() => {
+            count = count + 1;
+            jobs.innerText = `${count}+`;
+
+            if (count === 10) clearInterval(interval);
+        }, 150);
+    }
+})
+
+// Init Functions
+window.addEventListener('load', () => {
+    tagCodes = document.querySelectorAll('code')
+
+    if (tagCodes) {
+        tagCodes.forEach(code => {
+            code.innerHTML = `<div class="flex items-center gap-1.5 mb-4"> 
+                                <div class="w-3 h-3 rounded-full bg-[#F77963]"></div> 
+                                <div class="w-3 h-3 rounded-full bg-[#F89B4A]"></div> 
+                                <div class="w-3 h-3 rounded-full bg-[#41C662]"></div> 
+                              </div>` + code.innerHTML;
+        })
+    }
+})
+
 // Easter Egg
+const loading = () => {
+    let pipe = []
+    let count = 0
+
+    const interval = setInterval(() => {
+        count++;
+        pipe.push('|');
+        console.clear();
+        console.log(`%cBaixando... ${pipe.join('|')}`, 'font-size: .675rem; font-weight: 700')
+
+        if (count === 10) clearInterval(interval)
+    }, 300)
+}
+
 window.addEventListener('load', () => {
     console.clear();
 
