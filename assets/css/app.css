@@ -72,26 +72,26 @@ a:focus, button:focus, input:focus, textarea:focus {
     margin-top: 1.3em;
     margin-bottom: 1.3em;
 }
-.content pre {
+.content pre code {
     border-radius: 1rem;
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
     --tw-bg-opacity: 1;
     background-color: rgb(24 24 26 / var(--tw-bg-opacity));
-    overflow: auto;
-    padding: 1rem;
-    --tw-text-opacity: 1;
-    word-wrap: normal;
-    color: rgb(244 246 246 / var(--tw-text-opacity));
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-    hyphens: none;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-    text-align: left;
-    white-space: pre;
-    word-break: normal;
-    word-spacing: normal;
+    /*overflow: auto;*/
+    /*padding: 1rem;*/
+    /*--tw-text-opacity: 1;*/
+    /*word-wrap: normal;*/
+    /*color: rgb(244 246 246 / var(--tw-text-opacity));*/
+    /*font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;*/
+    /*hyphens: none;*/
+    /*-moz-tab-size: 4;*/
+    /*-o-tab-size: 4;*/
+    /*tab-size: 4;*/
+    /*text-align: left;*/
+    /*white-space: pre;*/
+    /*word-break: normal;*/
+    /*word-spacing: normal;*/
 }
 .content ul {
     padding: 0 20px;
