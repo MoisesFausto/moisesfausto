@@ -44,8 +44,7 @@ window.addEventListener('scroll', () => {
     }
 })
 
-// Init Functions
-window.addEventListener('load', () => {
+const tagsPreCode = () => {
     tagCodes = document.querySelectorAll('code')
 
     if (tagCodes) {
@@ -57,7 +56,7 @@ window.addEventListener('load', () => {
                               </div>` + code.innerHTML;
         })
     }
-})
+}
 
 // Easter Egg
 const loading = () => {
@@ -74,12 +73,63 @@ const loading = () => {
     }, 300)
 }
 
-window.addEventListener('load', () => {
-    console.clear();
+const openTabs = () => {
+    const brandings = document.querySelectorAll('.branding');
+    const tabs = document.getElementById('tabs-companies');
+    const companies = document.getElementById('companies');
 
+    // Pega a altura padrão da Section
+    let heightCompaniesSections = 0;
+    if (companies)
+        heightCompaniesSections = companies.getBoundingClientRect().height;
+
+    // Pré-cacheia os elementos de tab
+    let tabElements;
+    if (tabs)
+        tabElements = Array.from(tabs.children);
+
+    // Adiciona o evento de click em cada branding
+    brandings.forEach(branding => {
+        branding.addEventListener('click', (e) => {
+            // Reseta a altura da Section
+            companies.style.height = 'auto';
+
+            // Esconde todas as tabs abertas
+            tabElements.forEach(tab => tab.classList.replace('opacity-100', 'opacity-0'));
+
+            // Pega o nome da tab a ser exibida
+            const targetTab = tabs.children.namedItem(branding.dataset.name);
+
+            // Remove a classe de seleção de todos os elementos
+            document.querySelectorAll('#companies .cursor-pointer').forEach(item => item.classList.remove('border-orange-500'));
+
+            if (targetTab && !targetTab.classList.contains('opacity-100')) {
+                // Pega a altura da Tab selecionada
+                const heightTabCompanies = targetTab.getBoundingClientRect().height;
+
+                // Ajusta dinamicamente a altura da section
+                companies.style.height = `${heightCompaniesSections + heightTabCompanies}px`;
+
+                // Marca o branding como selecionado
+                branding.classList.add('border-orange-500');
+
+                // Exibe a tab correspondente
+                targetTab.classList.replace('opacity-0', 'opacity-100');
+            } else {
+                // Se já estiver visível, oculta a tab
+                targetTab.classList.replace('opacity-100', 'opacity-0');
+            }
+        });
+    });
+}
+
+// Init Functions
+window.addEventListener('load', () => {
+    tagsPreCode();
+    openTabs();
+
+    console.clear();
     console.log('%cMoisés Fausto', 'color: #f97316; font-size: 3rem; font-weight: 700')
     console.log('%cFull Stack Developer | PHP | Laravel | Vue Js', 'color: #f97316; font-size: 1.25rem; font-weight: 400')
     console.log('%cOuuu, o que cê ta fazendo aqui??? 🫣', 'font-size: 1.25rem; font-weight: 400')
 })
-
-// @todo Restore HighlightJS
